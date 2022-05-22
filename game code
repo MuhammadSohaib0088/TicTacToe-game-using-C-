@@ -1,0 +1,114 @@
+#include <iostream>
+using namespace std;
+int numb;//this variable will store numbers entered by user
+bool draw;// this varable is used when game is draw 
+char board[3][3]={{'1','2','3'},{'4','5','6'},{'7','8','9'}};//an array of 9 numbers,each number is saved as character as they will be replaced by either X or O
+char turn='X';//here we are starting game by giving player 1[x] turn to enter number wherer he/she wants to store his/her symbol.
+int row,column;//as we are using a 2-D array and game is made in the form of a 3 x 3 matrix for which we will be using rows and columns.
+
+void screen();//this is a function that will show the board on the screen 
+
+void turns();//this function is used to switch turns of player and also if player 1 or 2 enters a number that is already selected,it will tell the user to enter anyother number
+
+bool gameover();//this function checks if the game is over or not. it will compare the entries of each row and column with the symbols and if they match VERTICALLY,HORIZONTLY OR DIAGOMALY then it returns false which terminates the game 
+
+int main()
+{
+while(gameover())//game will continue untill function gameover is true and it will remain true untill X's or O's are alligned in verticaly,horizontaly or diagonaly
+{
+	screen();//function call for display function
+	turns();//function call for player turns
+	screen();//here display function is called again because after player has enterd a number, that number is replaced by players symbol and after playerturn function this display function will show the NEW UPDATED BOARD.
+}
+if(turn=='X'&& draw==false)
+cout<<"\n\t\t\tPLAYER 2[O] WINS\n\t\t\t\tGame Over";
+else if(turn=='O'&&draw==false)                     //ya sara bool wala seen ha jo muja saii samj naii aya bool wala function b saii samj nai aya AGR ap ko aa jae samj to hama bata dana kiu k sir puchan ga VIVA  ma
+cout<<"\n\t\t\tPLAYER 1[X] WINS\n\n\t\t\t\tGame Over";
+else
+{
+cout<<"\n\t\t\tGAME DRAW!!!";
+}
+}
+
+//code for displaying board
+void screen()
+{
+	system("cls");
+	cout<<"\n\n\t\t\t\t\tTick   Tac  Toe\n\n";
+cout<<"\t\t\tPLAYER 1 = X\n"<<"\t\t\tPLAYER 2 = O\n\n";
+cout<<"\t\t\t     |     |     \n";
+cout<<"\t\t\t  "<<board[0][0]<<"  |  "<<board[0][1]<<"  |  "<<board[0][2]<<"  \n";
+cout<<"\t\t\t_____|_____|_____\n";
+cout<<"\t\t\t     |     |     \n";
+cout<<"\t\t\t  "<<board[1][0]<<"  |  "<<board[1][1]<<"  |  "<<board[1][2]<<"  \n";
+cout<<"\t\t\t_____|_____|_____\n";
+cout<<"\t\t\t     |     |     \n";
+cout<<"\t\t\t  "<<board[2][0]<<"  |  "<<board[2][1]<<"  |  "<<board[2][2]<<"  \n";
+cout<<"\t\t\t     |     |     \n\n";
+}
+//for switching turns of players
+void turns()
+{
+
+	if(turn=='X')
+	cout<<"\t\t\tPLAYER 1 [X]: ";
+	if(turn=='O')
+	cout<<"\t\t\tPLAYER 2 [O]: ";
+cin>>numb;
+switch(numb)
+{
+	case 1: row=0;column=0; break;
+	case 2: row=0;column=1; break;
+	case 3: row=0;column=2; break;
+	case 4: row=1;column=0; break;
+	case 5: row=1;column=1; break;
+	case 6: row=1;column=2; break;
+	case 7: row=2;column=0; break;
+	case 8: row=2;column=1; break;
+	case 9: row=2;column=2; break;
+	default:
+	cout<<"Invalid";
+	break;								
+}
+if(turn=='X'&& board[row][column]!='X' && board[row][column]!='O')
+{
+	board[row][column]='X';
+	turn='O';
+}
+else if(turn=='O'&& board[row][column]!='X' && board[row][column]!='O')
+{
+	board[row][ column]='O';
+	turn='X';
+}
+else
+{
+	cout<<"\n\t\t\tOption Already Selected\n\n\t\t\tPlease select another Number\n\n";
+	turns();
+}
+
+}
+//for game over.
+bool gameover()
+{
+	for(int i=0;i<3;i++)
+{
+	if(board[0][i]==board[1][i]&&board[0][i]==board[2][i]||board[i][0]==board[i][1]&&board[i][0]==board[i][2])
+	return false;//this if statement will check for vertical and horizontal allignment of symbols of player
+}
+if(board[0][0]==board[1][1]&&board[1][1]==board[2][2]||board[0][2]==board[1][1]&&board[1][1]==board[2][0])
+//this if statement will check for diagonal allignment of symbols of player
+{
+	return false;
+}
+	
+	for(int i=0;i<3;i++)
+	for(int j=0;j<3;j++)
+	
+		if(board[i][j]!='X'&&board[i][j]!='O')	
+	
+	return true;
+	
+	draw='true';
+	return false;
+}
+
